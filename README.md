@@ -1,11 +1,40 @@
-# Cloudflare Worker 配置指南
+# 部署指南
 
-本文档将指导您如何设置Cloudflare Worker和KV存储来实现留言墙和联系表单的数据处理功能。
+## Cloudflare Pages部署
 
-## 前提条件
+### 前提条件
+- Cloudflare账户
+- 代码托管在Git仓库(GitHub/GitLab/Bitbucket)
 
-1. 一个Cloudflare账户（可以免费注册：https://dash.cloudflare.com/sign-up）
-2. 基本的网站部署知识
+### 部署步骤
+1. 创建Pages项目并连接Git仓库
+2. 配置构建设置（选择无框架，输出目录为/）
+3. 可选：添加自定义域名
+4. 设置重定向规则(/* → /index.html)
+5. 测试部署
+
+## Cloudflare Worker配置
+
+### 核心功能
+- 留言墙数据处理
+- 联系表单提交处理
+
+### 配置步骤
+1. 创建KV命名空间
+2. 部署Worker并绑定KV
+3. 配置通知功能环境变量
+4. 更新前端API_URL配置
+
+### 测试
+- 验证留言墙功能
+- 测试联系表单提交
+- 检查KV存储数据
+
+
+## Cloudflare Worker配置指南
+
+设置Cloudflare Worker和KV存储来实现留言墙和联系表单的数据处理功能。
+
 
 ## 步骤1：创建KV命名空间
 
@@ -151,5 +180,51 @@
 
 - Workers：每天100,000个请求
 - KV存储：最多1GB存储空间
+- Pages：无限请求和带宽
 
 这些限制对于一般的留言墙和联系表单应用来说已经足够了。如果您的网站流量很大，可能需要考虑升级到付费计划。
+
+## Cloudflare Pages部署指南
+
+### 前提条件
+
+1. 一个Cloudflare账户（可以免费注册：https://dash.cloudflare.com/sign-up）
+2. 将项目代码托管在GitHub、GitLab或Bitbucket等Git仓库中
+
+### 步骤1：创建Pages项目
+
+1. 登录Cloudflare Dashboard
+2. 在左侧导航栏中，点击「Workers & Pages」
+3. 点击「创建应用程序」按钮
+4. 选择「连接到Git」
+5. 授权Cloudflare访问您的Git仓库
+
+### 步骤2：配置构建设置
+
+1. 选择您的仓库和分支（通常是main或master）
+2. 构建设置：
+   - 框架预设：选择「无框架」
+   - 构建命令：留空（静态网站无需构建）
+   - 构建输出目录：/（根目录）
+3. 点击「保存并部署」按钮
+
+### 步骤3：自定义域名（可选）
+
+1. 部署完成后，点击「自定义域」选项卡
+2. 添加您的自定义域名并按照提示配置DNS
+3. 等待DNS传播完成（通常需要几分钟）
+
+### 步骤4：配置重定向规则
+
+1. 在项目设置中，点击「设置」>「重定向」
+2. 添加以下规则以确保所有路径都重定向到index.html（单页应用需要）：
+   - 源路径：/*
+   - 目标URL：/index.html
+   - 状态码：200（重写）
+3. 点击「保存」按钮
+
+### 步骤5：测试部署
+
+1. 访问您的Cloudflare Pages URL（格式为：https://<项目名称>.pages.dev）
+2. 验证所有页面和功能是否正常工作
+3. 检查静态资源（CSS、JS、图片）是否加载正确

@@ -32,7 +32,7 @@ async function sendNotification(type, data) {
       content = `收到来自 ${data.name} (${data.email}) 的联系表单：\n${data.message}`;
     } else if (type === 'friendlink') {
       title = '新友链申请通知';
-      content = `收到来自 ${data.name} (${data.email}) 的友链申请：\n网站：${data.url}\n描述：${data.description}`;
+      content = `收到来自 ${data.name} 的友链申请：\n网站名称：${data.name}\n网站地址：${data.url}\n头像链接：${data.avatar || '未提供'}\n邮箱地址：${data.email}\n网站描述：${data.description}`;
     } else {
       return; // 未知类型，不发送通知
     }

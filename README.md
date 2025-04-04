@@ -73,17 +73,13 @@
 
 #### 前提条件
 - Cloudflare账户
-- 代码托管在Git仓库(GitHub/GitLab/Bitbucket)
 
-#### 部署步骤
-1. 登录Cloudflare Dashboard
-2. 进入Pages服务
-3. 创建新项目并连接Git仓库
-4. 配置构建设置：
-   - 构建命令：留空（无需构建）
-   - 输出目录：`/`（根目录）
-5. 点击部署
-6. 可选：添加自定义域名
+### 部署步骤
+1. 创建Pages项目并连接Git仓库
+2. 配置构建设置（选择无框架，输出目录为/）
+3. 可选：添加自定义域名
+4. 设置重定向规则(/* → /index.html)
+5. 测试部署
 
 ## Cloudflare Worker配置
 

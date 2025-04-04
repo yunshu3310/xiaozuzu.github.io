@@ -22,10 +22,18 @@ document.addEventListener('DOMContentLoaded', function() {
             messageList.appendChild(loadingNotice);
             
             // 从API获取留言数据
-            const response = await fetch(API_URL);
+            const response = await fetch(API_URL, {
+                method: 'GET',
+                headers: {
+                    'Accept': 'application/json'
+                },
+                // 添加超时处理
+                signal: AbortSignal.timeout(10000) // 10秒超时
+            });
             
             if (!response.ok) {
-                throw new Error('获取留言失败');
+                const statusText = response.statusText || '未知错误';
+                throw new Error(`服务器响应错误: ${response.status} ${statusText}`);
             }
             
             const messages = await response.json();
@@ -33,10 +41,41 @@ document.addEventListener('DOMContentLoaded', function() {
         } catch (error) {
             console.error('加载留言出错:', error);
             messageList.innerHTML = '';
+            
+            // 创建错误提示容器
+            const errorContainer = document.createElement('div');
+            errorContainer.className = 'message-error-container';
+            
+            // 创建错误提示文本
             const errorNotice = document.createElement('div');
             errorNotice.className = 'message-error-notice';
-            errorNotice.textContent = '加载留言失败，请稍后再试';
-            messageList.appendChild(errorNotice);
+            
+            // 根据错误类型提供更具体的错误信息
+            let errorMessage = '加载留言失败，请稍后再试';
+            if (error.name === 'AbortError') {
+                errorMessage = '加载留言超时，请检查您的网络连接';
+            } else if (error.name === 'TypeError' && error.message.includes('Failed to fetch')) {
+                errorMessage = '无法连接到服务器，请检查您的网络连接';
+            } else if (error.message.includes('服务器响应错误')) {
+                errorMessage = error.message;
+            }
+            
+            errorNotice.textContent = errorMessage;
+            
+            // 创建重试按钮
+            const retryButton = document.createElement('button');
+            retryButton.className = 'retry-button';
+            retryButton.textContent = '重新加载';
+            retryButton.addEventListener('click', function() {
+                loadMessages(); // 重新加载留言
+            });
+            
+            // 添加到错误容器
+            errorContainer.appendChild(errorNotice);
+            errorContainer.appendChild(retryButton);
+            
+            // 添加到留言列表
+            messageList.appendChild(errorContainer);
         }
     }
     

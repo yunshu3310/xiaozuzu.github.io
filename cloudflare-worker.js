@@ -30,6 +30,9 @@ async function sendNotification(type, data) {
     } else if (type === 'contact') {
       title = '新联系表单提交';
       content = `收到来自 ${data.name} (${data.email}) 的联系表单：\n${data.message}`;
+    } else if (type === 'friendlink') {
+      title = '新友链申请通知';
+      content = `收到来自 ${data.name} (${data.email}) 的友链申请：\n网站：${data.url}\n描述：${data.description}`;
     } else {
       return; // 未知类型，不发送通知
     }
@@ -194,6 +197,77 @@ async function handleRequest(request) {
         });
       } catch (error) {
         return new Response(JSON.stringify({ error: '提交联系表单失败' }), {
+          status: 500,
+          headers: corsHeaders
+        });
+      }
+    }
+  }
+  
+  // 处理友情链接申请
+  if (path === '/api/friendlinks') {
+    // 获取所有友链申请
+    if (request.method === 'GET') {
+      try {
+        // 从KV存储中获取友链数据
+        const friendlinksJson = await KV_MESSAGES.get('friend-links');
+        const friendlinks = friendlinksJson ? JSON.parse(friendlinksJson) : [];
+        
+        return new Response(JSON.stringify(friendlinks), {
+          headers: corsHeaders
+        });
+      } catch (error) {
+        return new Response(JSON.stringify({ error: '获取友链失败' }), {
+          status: 500,
+          headers: corsHeaders
+        });
+      }
+    }
+    
+    // 添加新友链申请
+    if (request.method === 'POST') {
+      try {
+        // 解析请求体
+        const data = await request.json();
+        
+        // 验证必填字段
+        if (!data.name || !data.url || !data.email || !data.description) {
+          return new Response(JSON.stringify({ error: '缺少必填字段' }), {
+            status: 400,
+            headers: corsHeaders
+          });
+        }
+        
+        // 从KV存储中获取现有友链申请
+        const friendlinksJson = await KV_MESSAGES.get('friend-links');
+        const friendlinks = friendlinksJson ? JSON.parse(friendlinksJson) : [];
+        
+        // 创建新友链申请对象
+        const newFriendlink = {
+          id: Date.now(),
+          name: data.name,
+          url: data.url,
+          avatar: data.avatar || '',
+          email: data.email,
+          description: data.description,
+          approved: false,  // 默认为未审核状态
+          timestamp: Date.now()
+        };
+        
+        // 添加到友链申请数组
+        friendlinks.push(newFriendlink);
+        
+        // 保存回KV存储
+        await KV_MESSAGES.put('friend-links', JSON.stringify(friendlinks));
+        
+        // 发送新友链申请通知
+        await sendNotification('friendlink', newFriendlink);
+        
+        return new Response(JSON.stringify({ success: true }), {
+          headers: corsHeaders
+        });
+      } catch (error) {
+        return new Response(JSON.stringify({ error: '提交友链申请失败' }), {
           status: 500,
           headers: corsHeaders
         });

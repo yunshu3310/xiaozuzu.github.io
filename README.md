@@ -1,46 +1,95 @@
 
-**魔改自**：[dimension](https://html5up.net/dimension)  
+# 个人主页项目
 
+一个基于HTML5 UP Dimension模板的现代化个人主页，集成了留言墙、友情链接和联系表单等交互功能。
 
-# 部署指南
+![预览图](images/pic01.jpg)
 
-## Cloudflare Pages部署
+## 项目概述
 
-### 前提条件
+这个项目是基于HTML5 UP的Dimension模板进行二次开发的个人主页，保留了原模板的美观设计，同时添加了多项实用功能，使其成为一个功能完善的个人网站门户。
+
+### 主要特点
+
+- **响应式设计**：完美适配各种设备屏幕尺寸
+- **一言API集成**：首页自动展示随机一言
+- **留言墙功能**：访客可以留言并展示在留言墙上
+- **友情链接系统**：展示友链并支持申请
+- **联系表单**：访客可以通过表单发送消息
+- **IP信息显示**：显示访客IP地址和地理位置
+- **通知系统**：新留言、友链申请和联系表单提交时发送通知
+
+## 功能模块
+
+### 1. 首页展示
+
+- 简洁的全屏展示页面
+- 随机一言API集成，每次刷新显示不同内容
+- 导航菜单链接到各功能页面
+
+### 2. 留言墙
+
+- 访客可以提交留言
+- 留言实时显示在留言墙上
+- 数据存储在Cloudflare KV中
+
+### 3. 友情链接
+
+- 展示已批准的友情链接
+- 提供友链申请表单
+- 支持自定义头像和描述
+
+### 4. 联系表单
+
+- 访客可以发送联系消息
+- 表单验证确保数据有效性
+- 提交后通知站长
+
+## 技术栈
+
+- **前端**：HTML5, CSS3, JavaScript, jQuery
+- **后端**：Cloudflare Workers (无服务器函数)
+- **数据存储**：Cloudflare KV (键值存储)
+- **部署**：Cloudflare Pages
+
+## 安装与部署
+
+### 本地开发
+
+1. 克隆仓库到本地：
+   ```bash
+   git clone https://github.com/deerwan/homepage_demo.git
+   cd homepage_demo
+   ```
+
+2. 使用任意HTTP服务器启动项目，例如：
+   ```bash
+   npx http-server -p 8080
+   ```
+
+3. 在浏览器中访问 `http://localhost:8080`
+
+### Cloudflare Pages部署
+
+#### 前提条件
 - Cloudflare账户
 - 代码托管在Git仓库(GitHub/GitLab/Bitbucket)
 
-### 部署步骤
-1. 创建Pages项目并连接Git仓库
-2. 配置构建设置（选择无框架，输出目录为/）
-3. 可选：添加自定义域名
-4. 设置重定向规则(/* → /index.html)
-5. 测试部署
+#### 部署步骤
+1. 登录Cloudflare Dashboard
+2. 进入Pages服务
+3. 创建新项目并连接Git仓库
+4. 配置构建设置：
+   - 构建命令：留空（无需构建）
+   - 输出目录：`/`（根目录）
+5. 点击部署
+6. 可选：添加自定义域名
 
 ## Cloudflare Worker配置
 
-### 核心功能
-- 留言墙数据处理
-- 联系表单提交处理
+要启用留言墙、友情链接和联系表单功能，需要配置Cloudflare Worker作为后端API。
 
-### 配置步骤
-1. 创建KV命名空间
-2. 部署Worker并绑定KV
-3. 配置通知功能环境变量
-4. 更新前端API_URL配置
-
-### 测试
-- 验证留言墙功能
-- 测试联系表单提交
-- 检查KV存储数据
-
-
-## Cloudflare Worker配置指南
-
-设置Cloudflare Worker和KV存储来实现留言墙和联系表单的数据处理功能。
-
-
-## 步骤1：创建KV命名空间
+### 步骤1：创建KV命名空间
 
 1. 登录Cloudflare Dashboard
 2. 在左侧导航栏中，点击「Workers & Pages」
@@ -49,7 +98,7 @@
 5. 输入命名空间名称，例如：`message-wall-data`
 6. 点击「添加」按钮创建命名空间
 
-## 步骤2：创建和部署Worker
+### 步骤2：创建和部署Worker
 
 1. 在Cloudflare Dashboard中，点击「Workers & Pages」
 2. 点击「创建应用程序」按钮
@@ -59,112 +108,72 @@
 6. 在编辑器中，删除默认代码，然后粘贴项目中的`cloudflare-worker.js`文件内容
 7. 点击「保存并部署」按钮
 
-## 步骤3：绑定KV命名空间到Worker
+### 步骤3：绑定KV命名空间到Worker
 
 1. 部署Worker后，点击「设置」选项卡
 2. 找到「变量」部分，点击「KV命名空间绑定」
 3. 点击「添加绑定」按钮
 4. 在「变量名称」字段中输入：`KV_MESSAGES`（必须与Worker代码中使用的名称一致）
-5. 在「KV命名空间」下拉菜单中选择您之前创建的命名空间（例如：`message-wall-data`）
+5. 在「KV命名空间」下拉菜单中选择您之前创建的命名空间
 6. 点击「保存」按钮
 
-## 步骤4：配置通知功能环境变量
+### 步骤4：配置通知功能（可选）
 
-为了启用留言和联系表单提交的通知功能，您需要配置以下环境变量：
+为了启用留言和联系表单提交的通知功能，您可以配置以下环境变量：
 
-1. 在Cloudflare Dashboard中，进入您的Worker页面
-2. 点击「设置」选项卡
-3. 找到「环境变量」部分
-4. 点击「添加变量」按钮
-5. 添加以下变量：
-   - `NOTIFICATION_API_URL`：飞书机器人的Webhook地址
-   - `NOTIFICATION_TEMPLATE`（可选）：自定义通知消息模板
-6. 点击「保存」按钮
+1. 在Worker页面，点击「设置」选项卡
+2. 找到「环境变量」部分
+3. 点击「添加变量」按钮
+4. 添加以下变量：
+   - `NOTIFICATION_API_URL`：通知服务的Webhook地址（如飞书机器人）
 
-### 飞书机器人详细配置指南
-
-1. 登录飞书管理后台（https://www.feishu.cn/）
-2. 创建一个群聊或使用现有群聊
-3. 在群设置中，选择「群机器人」>「添加机器人」>「自定义机器人」
-4. 设置机器人名称和头像
-5. 在安全设置中，建议选择「自定义关键词」并添加"留言"和"联系"作为关键词
-6. 复制生成的Webhook地址
-7. 将此Webhook地址配置为Cloudflare Worker的`NOTIFICATION_API_URL`环境变量
-
-### 自定义通知模板（可选）
-
-您可以通过设置`NOTIFICATION_TEMPLATE`环境变量来自定义通知消息格式。默认模板为：
-
-```
-新{type}来自{name}（{email}）:
-{message}
-```
-
-其中：
-- `{type}`：消息类型（"留言"或"联系表单"）
-- `{name}`：用户姓名
-- `{email}`：用户邮箱
-- `{message}`：消息内容
-
-### 飞书机器人配置指南
+#### 飞书机器人配置指南
 
 1. 登录飞书管理后台
 2. 创建一个群聊或使用现有群聊
 3. 在群设置中，选择「群机器人」>「添加机器人」>「自定义机器人」
 4. 设置机器人名称和头像
 5. 复制生成的Webhook地址
-6. 将此Webhook地址配置为Cloudflare Worker的`NOTIFICATION_API_URL`环境变量
+6. 将此Webhook地址配置为Worker的`NOTIFICATION_API_URL`环境变量
 
-当有新留言或联系表单提交时，机器人将自动在群聊中发送通知。
+### 步骤5：配置前端代码
 
-## 步骤5：配置前端代码
+1. 打开项目中的以下文件，更新API地址为您的Worker URL：
+   - `assets/js/message-wall.js`中的`API_URL`
+   - `assets/js/form-handler.js`中的`CONTACT_API_URL`
+   - `assets/js/friend-link-handler.js`中的`FRIENDLINK_API_URL`
 
-### 配置留言墙功能
+## 自定义配置
 
-1. 打开项目中的`assets/js/message-wall.js`文件
-2. 找到顶部的`API_URL`常量，将其值修改为您的Worker URL，例如：
-   ```javascript
-   const API_URL = 'https://message-wall-api.your-username.workers.dev/api/messages';
-   ```
-   （将`your-username`替换为您的Cloudflare账户名称）
+### 修改网站标题和图标
 
-### 配置联系表单功能
+1. 编辑`index.html`文件中的`<title>`标签
+2. 替换`images/favicon.png`文件
 
-1. 打开项目中的`assets/js/form-handler.js`文件
-2. 找到顶部的`CONTACT_API_URL`常量，将其值修改为您的Worker URL，例如：
-   ```javascript
-   const CONTACT_API_URL = 'https://message-wall-api.your-username.workers.dev/api/contact';
-   ```
-   （将`your-username`替换为您的Cloudflare账户名称）
+### 修改首页内容
 
-## 步骤5：测试功能
+1. 编辑`index.html`文件中的`<header>`部分
+2. 修改导航菜单链接
 
-### 测试留言墙功能
+### 修改关于页面
 
-1. 部署您的网站
-2. 访问留言墙页面
-3. 尝试添加新留言并验证它们是否正确显示
-4. 在不同设备或浏览器上访问页面，确认留言数据是否同步
+编辑`index.html`文件中`id="about"`的`<article>`部分
 
-### 测试联系表单功能
+### 修改样式
 
-1. 访问网站的联系表单页面
-2. 填写姓名、邮箱和留言内容
-3. 提交表单并验证是否收到成功提交的提示
-4. 在Cloudflare Dashboard中，可以通过以下方式查看提交的联系表单数据：
-   - 进入您的Worker
-   - 点击「KV」选项卡
-   - 选择您创建的命名空间
-   - 查找键名为`contact-submissions`的条目
+- 主要样式：`assets/css/main.css`
+- 自定义样式：`assets/css/custom.css`
+- 表单样式：`assets/css/form-styles.css`
+- 留言墙样式：`assets/css/message-wall.css`
+- 友链样式：`assets/css/friend-links.css`
 
 ## 数据存储说明
 
 在Cloudflare KV存储中，数据以键值对的形式存储：
 
-- 留言墙数据存储在键名为`wall-messages`的条目中
-- 联系表单提交数据存储在键名为`contact-submissions`的条目中
-
-这两个键都存储JSON格式的数组，包含所有提交的数据。
+- 留言墙数据：键名为`wall-messages`
+- 联系表单数据：键名为`contact-submissions`
+- 友情链接数据：键名为`friend-links`
 
 ## 故障排除
 
@@ -172,19 +181,26 @@
 
 1. Worker是否成功部署
 2. KV命名空间是否正确绑定
-3. API_URL和CONTACT_API_URL是否设置正确
+3. API URL是否设置正确
 4. 浏览器控制台是否有错误信息
-5. Worker的请求日志中是否有错误（可在Cloudflare Dashboard中查看）
 
-## 本地测试
+## 免费计划限制
 
-如需在本地环境测试这些功能，请参考项目中的`LOCAL-TESTING.md`文档，其中提供了多种本地测试方法。
-
-## Cloudflare免费计划限制
-
+Cloudflare免费计划的限制：
 - Workers：每天100,000个请求
 - KV存储：最多1GB存储空间
 - Pages：无限请求和带宽
 
-这些限制对于一般的留言墙和联系表单应用来说已经足够了。如果您的网站流量很大，可能需要考虑升级到付费计划。
+## 许可证
+
+本项目基于HTML5 UP的Dimension模板，遵循CCA 3.0许可证。
+- 原始模板：[HTML5 UP Dimension](https://html5up.net/dimension)
+- 许可证：[CCA 3.0](https://html5up.net/license)
+
+## 鸣谢
+
+- [HTML5 UP](https://html5up.net/) - 提供原始模板
+- [Font Awesome](https://fontawesome.com/) - 图标库
+- [一言API](https://hitokoto.cn/) - 提供随机一言服务
+- [Cloudflare](https://www.cloudflare.com/) - 提供托管和后端服务
 

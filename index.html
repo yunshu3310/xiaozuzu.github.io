@@ -14,6 +14,8 @@
 		<link rel="stylesheet" href="assets/css/custom.css" />
 		<link rel="stylesheet" href="assets/css/form-styles.css" />
 		<link rel="stylesheet" href="assets/css/message-wall.css" />
+		<link rel="stylesheet" href="assets/css/friend-links.css" />
+		<link rel="stylesheet" href="assets/css/url-input-styles.css" />
 		<noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
 	</head>
 	<body class="is-preload">
@@ -39,6 +41,7 @@
 								<li><a href="https://home.952780.xyz/">主页</a></li>
 								<li><a href="#about">关于</a></li>
 								<li><a href="#message-wall">留言</a></li>
+								<li><a href="#friend-links">友链</a></li>
 								<!--<li><a href="#elements">Elements</a></li>-->
 							</ul>
 						</nav>
@@ -117,6 +120,57 @@
 								</div>
 							</article>
 
+						<!-- Friend Links -->
+							<article id="friend-links">
+								<h2 class="major">友情链接</h2>
+								<div class="friend-links-container">
+									<div class="friend-links-list" id="friend-links-list">
+										<!-- 友链列表 -->
+										<div class="friend-link-card">
+											<a href="https://linux.do/" target="_blank" rel="noopener noreferrer" class="friend-link-wrapper">
+												<div class="friend-link-avatar">
+													<img src="https://img.106996.xyz/file/favicon-linux.do-1-32x32.png" alt="LINUX DO" />
+												</div>
+												<div class="friend-link-name">LINUX DO</div>
+												<div class="friend-link-desc">新的理想型社区</div>
+											</a>
+										</div>
+									</div>
+
+									<div class="friend-link-form-container">
+										<h3>申请友链</h3>
+										<form id="friend-link-form">
+											<div class="fields">
+												<div class="field half">
+													<label for="friend-name">网站名称</label>
+													<input type="text" name="friend-name" id="friend-name" placeholder="请输入您的网站名称" required />
+												</div>
+												<div class="field half">
+													<label for="friend-url">网站地址</label>
+													<input type="url" name="friend-url" id="friend-url" placeholder="请输入您的网站地址" required />
+												</div>
+												<div class="field half">
+													<label for="friend-avatar">头像链接</label>
+													<input type="url" name="friend-avatar" id="friend-avatar" placeholder="请输入您的头像链接" />
+												</div>
+												<div class="field half">
+													<label for="friend-email">联系邮箱</label>
+													<input type="email" name="friend-email" id="friend-email" placeholder="请输入您的联系邮箱" required />
+												</div>
+												<div class="field">
+													<label for="friend-description">网站描述</label>
+													<textarea name="friend-description" id="friend-description" rows="2" placeholder="请简要描述您的网站..." required></textarea>
+												</div>
+											</div>
+											<ul class="actions">
+												<li><input type="submit" value="提交申请" class="primary" /></li>
+												<li><input type="reset" value="重置" /></li>
+											</ul>
+										</form>
+									</div>
+								</div>
+							</article>
+
 				</div>
 
 
@@ -146,6 +200,8 @@
 			<script src="assets/js/custom.js"></script>
 			<script src="assets/js/form-handler.js"></script>
 			<script src="assets/js/message-wall.js"></script>
+			<script src="assets/js/friend-link-handler.js"></script>
+			<script src="assets/js/url-input-handler.js"></script>
 
 	</body>
 </html>

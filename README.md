@@ -3,7 +3,7 @@
 
 一个基于HTML5 UP Dimension模板的现代化个人主页，集成了留言墙、友情链接和联系表单等交互功能。
 
-![预览图](images/pic01.jpg)
+![预览图](https://img.106996.xyz/file/Snipaste_2025-04-04_11-28-21.png)
 
 ## 项目概述
 

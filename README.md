@@ -199,4 +199,4 @@ Cloudflare免费计划的限制：
 - [Font Awesome](https://fontawesome.com/) - 图标库
 - [一言API](https://hitokoto.cn/) - 提供随机一言服务
 - [Cloudflare](https://www.cloudflare.com/) - 提供托管和后端服务
-
+- [The Chaffins](https://unsplash.com/@thechaffins) - 背景图片提供者，图片来源于 [Unsplash](https://unsplash.com/photos/cameras-and-a-leather-camera-strap-on-wood-Vs3OXyzKUkg)

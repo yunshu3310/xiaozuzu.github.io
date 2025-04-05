@@ -84,6 +84,9 @@ document.addEventListener('DOMContentLoaded', function() {
         // 清空留言列表
         messageList.innerHTML = '';
         
+        // 添加置顶留言
+        addPinnedMessage();
+        
         if (messages.length === 0) {
             // 如果没有留言，显示提示信息
             const emptyNotice = document.createElement('div');
@@ -224,6 +227,40 @@ document.addEventListener('DOMContentLoaded', function() {
                 alert('留言发布失败，请稍后再试！');
             }
         });
+    }
+    
+    // 添加置顶留言的函数
+    function addPinnedMessage() {
+        // 创建置顶留言元素
+        const pinnedMessage = document.createElement('div');
+        pinnedMessage.className = 'message-item';
+        
+        // 创建留言头部（作者和日期）
+        const messageHeader = document.createElement('div');
+        messageHeader.className = 'message-header';
+        
+        const messageAuthor = document.createElement('div');
+        messageAuthor.className = 'message-author';
+        messageAuthor.textContent = '📢 站长公告';
+        
+        const messageDate = document.createElement('div');
+        messageDate.className = 'message-date';
+        messageDate.textContent = '置顶消息';
+        
+        messageHeader.appendChild(messageAuthor);
+        messageHeader.appendChild(messageDate);
+        
+        // 创建留言内容
+        const messageContent = document.createElement('div');
+        messageContent.className = 'message-content';
+        messageContent.innerHTML = '<br>为保证留言墙的整洁美观<br>请不要发布一些无用的信息<br>请填写真实信息<br>您的信息不会泄露';
+        
+        // 将头部和内容添加到留言项
+        pinnedMessage.appendChild(messageHeader);
+        pinnedMessage.appendChild(messageContent);
+        
+        // 将置顶留言添加到留言列表最前面
+        messageList.appendChild(pinnedMessage);
     }
     
     // 初始加载留言

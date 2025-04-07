@@ -13,6 +13,7 @@
 
 - **响应式设计**：完美适配各种设备屏幕尺寸
 - **一言API集成**：首页自动展示随机一言
+- **实时天气**：基于地理位置显示当前天气信息
 - **留言墙功能**：访客可以留言并展示在留言墙上
 - **友情链接系统**：展示友链并支持申请
 - **联系表单**：访客可以通过表单发送消息
@@ -39,7 +40,14 @@
 - 提供友链申请表单
 - 支持自定义头像和描述
 
-### 4. 联系表单
+### 4. 天气功能
+
+- 基于HTML5 Geolocation API获取访客位置
+- 集成WeatherAPI显示实时天气信息
+- 支持温度和天气状态图标显示
+- 默认使用北京位置作为备选
+
+### 5. 联系表单
 
 - 访客可以发送联系消息
 - 表单验证确保数据有效性
@@ -113,7 +121,16 @@
 5. 在「KV命名空间」下拉菜单中选择您之前创建的命名空间
 6. 点击「保存」按钮
 
-### 步骤4：配置通知功能（可选）
+### 步骤4：配置天气功能
+
+1. 注册 [WeatherAPI](https://www.weatherapi.com/) 账号
+2. 获取API密钥
+3. 在 `assets/js/weather.js` 中更新 `WEATHER_API_KEY` 变量：
+   ```javascript
+   const WEATHER_API_KEY = '你的API密钥';
+   ```
+
+### 步骤5：配置通知功能（可选）
 
 为了启用留言和联系表单提交的通知功能，您可以配置以下环境变量：
 
@@ -199,4 +216,3 @@ Cloudflare免费计划的限制：
 - [Font Awesome](https://fontawesome.com/) - 图标库
 - [一言API](https://hitokoto.cn/) - 提供随机一言服务
 - [Cloudflare](https://www.cloudflare.com/) - 提供托管和后端服务
-- [The Chaffins](https://unsplash.com/@thechaffins) - 背景图片提供者，图片来源于 [Unsplash](https://unsplash.com/photos/cameras-and-a-leather-camera-strap-on-wood-Vs3OXyzKUkg)

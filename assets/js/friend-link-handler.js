@@ -1,7 +1,12 @@
 // 友情链接表单处理脚本 - 使用Cloudflare Worker API
 
 // 配置Cloudflare Worker API地址
-const FRIENDLINK_API_URL = 'https://message-wall-api.106996.xyz/api/friendlinks';
+const FRIENDLINK_API_URL = 'https://example.com/api/friendlinks'; // 需要替换为实际的API地址
+
+// 检查API地址是否已配置
+function isApiConfigured() {
+    return FRIENDLINK_API_URL !== 'https://example.com/api/friendlinks';
+}
 
 // 创建友链卡片元素的函数
 function createFriendLinkCard(friendLink) {
@@ -121,6 +126,14 @@ document.addEventListener('DOMContentLoaded', function() {
             const originalBtnValue = submitBtn.value;
             submitBtn.value = '提交中...';
             submitBtn.disabled = true;
+            
+            // 检查API是否已配置
+            if (!isApiConfigured()) {
+                alert('请先配置Cloudflare Worker API地址，查看README.md了解如何配置');
+                submitBtn.value = originalBtnValue;
+                submitBtn.disabled = false;
+                return;
+            }
             
             // 发送数据到Cloudflare Worker API
             fetch(FRIENDLINK_API_URL, {

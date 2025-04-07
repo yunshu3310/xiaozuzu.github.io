@@ -1,10 +1,20 @@
 // WeatherAPI配置
-const WEATHER_API_KEY = '08e435ad8cd74f73b7030628250203'; // 需要替换为实际的API密钥，请更换为你的API密钥
+const WEATHER_API_KEY = 'your_api_key_here'; // 需要替换为实际的API密钥，请更换为你的API密钥
 // 天气API URL，使用WeatherAPI的免费版，需要注册并获取API密钥，免费版的API限制为1000次/日，需要注意使用限制
 const WEATHER_API_URL = 'https://api.weatherapi.com/v1/current.json';
 
+// 检查API密钥是否已配置
+function isApiKeyConfigured() {
+    return WEATHER_API_KEY !== 'your_api_key_here';
+}
+
 // 获取天气信息
 async function getWeatherData(latitude, longitude) {
+    if (!isApiKeyConfigured()) {
+        console.error('WeatherAPI密钥未配置');
+        return { error: 'API_KEY_NOT_CONFIGURED' };
+    }
+
     try {
         const response = await fetch(`${WEATHER_API_URL}?key=${WEATHER_API_KEY}&q=${latitude},${longitude}&aqi=no`);
         if (!response.ok) {
@@ -13,14 +23,18 @@ async function getWeatherData(latitude, longitude) {
         return await response.json();
     } catch (error) {
         console.error('Error fetching weather data:', error);
-        return null;
+        return { error: 'FETCH_ERROR' };
     }
 }
 
 // 更新天气显示
 function updateWeatherDisplay(weatherData) {
-    if (!weatherData) {
-        document.getElementById('weather-container').innerHTML = '<p class="weather-error">无法获取天气信息</p>';
+    if (!weatherData || weatherData.error) {
+        let errorMessage = '无法获取天气信息';
+        if (weatherData && weatherData.error === 'API_KEY_NOT_CONFIGURED') {
+            errorMessage = '请先配置WeatherAPI密钥<br><small>请查看README.md了解如何配置</small>';
+        }
+        document.getElementById('weather-container').innerHTML = `<p class="weather-error">${errorMessage}</p>`;
         return;
     }
 

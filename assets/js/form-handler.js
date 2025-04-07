@@ -1,7 +1,12 @@
 // 表单处理脚本 - 使用Cloudflare Worker API
 
 // 配置Cloudflare Worker API地址
-const CONTACT_API_URL = 'https://message-wall-api.106996.xyz/api/contact';
+const CONTACT_API_URL = 'https://example.com/api/contact'; // 替换为你的Cloudflare Worker API地址
+
+// 检查API地址是否已配置
+function isApiConfigured() {
+    return CONTACT_API_URL !== 'https://example.com/api/contact';
+}
 
 // 当DOM加载完成后执行
 document.addEventListener('DOMContentLoaded', function() {
@@ -45,6 +50,14 @@ document.addEventListener('DOMContentLoaded', function() {
             submitBtn.value = '发送中...';
             submitBtn.disabled = true;
             
+            // 检查API是否已配置
+            if (!isApiConfigured()) {
+                alert('请先配置Cloudflare Worker API地址，查看README.md了解如何配置');
+                submitBtn.value = originalBtnValue;
+                submitBtn.disabled = false;
+                return;
+            }
+
             // 发送数据到Cloudflare Worker API
             fetch(CONTACT_API_URL, {
                 method: 'POST',

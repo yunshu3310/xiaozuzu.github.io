@@ -17,6 +17,8 @@
 		<link rel="stylesheet" href="assets/css/friend-links.css" />
 		<link rel="stylesheet" href="assets/css/url-input-styles.css" />
 		<link rel="stylesheet" href="assets/css/skills.css" />
+		<link rel="stylesheet" href="assets/css/weather.css" />
+		<!-- 注释掉下面这行则不显示字体特效 -->
 		<link rel="stylesheet" href="assets/css/font-effects.css" />
 		<noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
 	</head>
@@ -35,6 +37,9 @@
 							<div class="inner">
 								<h1>鹿</h1>
 								<p id="hitokoto">正在加载一言...</p>
+								<div id="weather-container" class="weather-container">
+									<p>正在获取天气信息...</p>
+								</div>
 							</div>
 						</div>
 						<nav>
@@ -228,6 +233,7 @@
 			<script src="assets/js/message-wall.js"></script>
 			<script src="assets/js/friend-link-handler.js"></script>
 			<script src="assets/js/url-input-handler.js"></script>
+		<script src="assets/js/weather.js"></script>
 
 	</body>
 </html>

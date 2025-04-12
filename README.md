@@ -1,5 +1,4 @@
-
-# 个人主页项目
+# 个人主页
 
 一个基于HTML5 UP Dimension模板的现代化个人主页，集成了留言墙、友情链接和联系表单等交互功能。
 
@@ -65,12 +64,14 @@
 ### 本地开发
 
 1. 克隆仓库到本地：
+
    ```bash
    git clone https://github.com/deerwan/homepage_demo.git
    cd homepage_demo
    ```
 
 2. 使用任意HTTP服务器启动项目，例如：
+
    ```bash
    npx http-server -p 8080
    ```
@@ -80,14 +81,15 @@
 ### Cloudflare Pages部署
 
 #### 前提条件
+
 - Cloudflare账户
 
 ### 部署步骤
-1. 创建Pages项目并连接Git仓库
-2. 配置构建设置（选择无框架，输出目录为/）
-3. 可选：添加自定义域名
-4. 设置重定向规则(/* → /index.html)
-5. 测试部署
+
+1. Fork本仓库到您的GitHub账户
+2. 在Cloudflare Dashboard中，点击「Pages」
+3. 配置构建设置（选择无框架，输出目录为/）
+4. 可选：添加自定义域名
 
 ## Cloudflare Worker配置
 
@@ -124,8 +126,11 @@
 ### 步骤4：配置天气功能
 
 1. 注册 [WeatherAPI](https://www.weatherapi.com/) 账号
+
 2. 获取API密钥
+
 3. 在 `assets/js/weather.js` 中更新 `WEATHER_API_KEY` 变量：
+
    ```javascript
    const WEATHER_API_KEY = '你的API密钥';
    ```
@@ -200,6 +205,7 @@
 ## 免费计划限制
 
 Cloudflare免费计划的限制：
+
 - Workers：每天100,000个请求
 - KV存储：最多1GB存储空间
 - Pages：无限请求和带宽
@@ -207,6 +213,7 @@ Cloudflare免费计划的限制：
 ## 许可证
 
 本项目基于HTML5 UP的Dimension模板，遵循CCA 3.0许可证。
+
 - 原始模板：[HTML5 UP Dimension](https://html5up.net/dimension)
 - 许可证：[CCA 3.0](https://html5up.net/license)
 

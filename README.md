@@ -157,6 +157,13 @@
 ### 步骤5：配置前端代码
 
 1. 打开项目中的以下文件，更新API地址为您的Worker URL：
+
+   示例：
+
+   打开`assets/js/message-wall.js`配置Cloudflare Worker API地址`const API_URL = 'https://你的域名/api/messages'`
+
+   
+
    - `assets/js/message-wall.js`中的`API_URL`
    - `assets/js/form-handler.js`中的`CONTACT_API_URL`
    - `assets/js/friend-link-handler.js`中的`FRIENDLINK_API_URL`

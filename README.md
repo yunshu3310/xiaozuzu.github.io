@@ -1,14 +1,10 @@
 # 个人主页
 
-一个基于HTML5 UP Dimension模板的现代化个人主页，集成了留言墙、友情链接和联系表单等交互功能。
+现代化个人主页，集成了留言墙、友情链接和联系表单等交互功能。
 
 ![预览图](https://img.106996.xyz/file/Snipaste_2025-04-04_11-28-21.png)
 
-## 项目概述
-
-这个项目是基于HTML5 UP的Dimension模板进行二次开发的个人主页，保留了原模板的美观设计，同时添加了多项实用功能，使其成为一个功能完善的个人网站门户。
-
-### 主要特点
+## 主要特点
 
 - **响应式设计**：完美适配各种设备屏幕尺寸
 - **一言API集成**：首页自动展示随机一言
@@ -19,7 +15,40 @@
 - **IP信息显示**：显示访客IP地址和地理位置
 - **通知系统**：新留言、友链申请和联系表单提交时发送通知
 
-## 功能模块
+## 快速开始
+
+### 前提条件
+
+- Cloudflare账户
+- WeatherAPI账户（用于天气功能）
+
+### 部署步骤
+
+1. Fork本仓库到您的GitHub账户
+2. 在Cloudflare Pages中部署项目
+3. 创建并配置Cloudflare Worker
+4. 配置KV存储
+5. 更新API配置
+
+### API配置
+
+在以下文件中更新您的API地址：
+
+```javascript
+// assets/js/message-wall.js
+const API_URL = 'YOUR_WORKER_DOMAIN/api/messages'
+
+// assets/js/form-handler.js
+const CONTACT_API_URL = 'YOUR_WORKER_DOMAIN/api/contact'
+
+// assets/js/friend-link-handler.js
+const FRIENDLINK_API_URL = 'YOUR_WORKER_DOMAIN/api/friendlinks'
+
+// assets/js/weather.js
+const WEATHER_API_KEY = 'your_api_key_here'
+```
+
+### 功能模块
 
 ### 1. 首页展示
 
@@ -60,23 +89,6 @@
 - **部署**：Cloudflare Pages
 
 ## 安装与部署
-
-### 本地开发
-
-1. 克隆仓库到本地：
-
-   ```bash
-   git clone https://github.com/deerwan/homepage_demo.git
-   cd homepage_demo
-   ```
-
-2. 使用任意HTTP服务器启动项目，例如：
-
-   ```bash
-   npx http-server -p 8080
-   ```
-
-3. 在浏览器中访问 `http://localhost:8080`
 
 ### Cloudflare Pages部署
 
@@ -216,13 +228,6 @@ Cloudflare免费计划的限制：
 - Workers：每天100,000个请求
 - KV存储：最多1GB存储空间
 - Pages：无限请求和带宽
-
-## 许可证
-
-本项目基于HTML5 UP的Dimension模板，遵循CCA 3.0许可证。
-
-- 原始模板：[HTML5 UP Dimension](https://html5up.net/dimension)
-- 许可证：[CCA 3.0](https://html5up.net/license)
 
 ## 鸣谢
 
